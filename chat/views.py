@@ -45,6 +45,9 @@ class ChatListView(generics.ListAPIView):
                 default= False,
                 output_field=models.BooleanField()
             ),
+            message_count = User.objects.exclude(
+                    id=self.request.user.id).filter(chat__id=models.OuterRef('id')).exclude(chat__messages__read = self.request.user).count()
+            
             
  
         )
